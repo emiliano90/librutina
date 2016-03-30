@@ -4,16 +4,12 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-
+#include <chrono>
 #include <ardrone.h>
 
 #include "message/message_server.hpp"
 
-# include "structures.hpp"
-#include "classes/pid_rp.hpp"
-#include "classes/pid_y.hpp"
-#include "classes/pid_z.hpp"
-#include "classes/robot_configuration.hpp"
+#include "structures.hpp"
 #include "util/util.hpp"
 
 #endif                                                      // LIBARDRONE_HPP

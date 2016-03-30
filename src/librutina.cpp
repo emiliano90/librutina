@@ -2,13 +2,10 @@
 
 using namespace robot;
 
-SafeSpot nextDestination(std::vector<SafeSpot> destinations, SafeSpot nextDestination);
+SafeSpot getNextDestination(std::vector<SafeSpot> destinations, SafeSpot actualDestination);
 
 extern "C" void run( tesis::MessageServer* msgServer )
 {
-    RobotConfiguration robotConfig( "./config/libardrone.json" );
-    RobotConfig config = robotConfig.get();
-
     bool quit = false;
     struct timeval start, end;
     start.tv_sec = 0;
@@ -61,10 +58,10 @@ extern "C" void run( tesis::MessageServer* msgServer )
 	  {
 	      if(nextDestination.id == -1)
 	      {
-		nextDestination = nextDestination(destinations, nextDestination);
+		nextDestination = getNextDestination(destinations, nextDestination);
 	      }
 		
-	      float distance = Util::distance( robot_position, nextDestination);
+	      float distance = Util::distance( robot_position, nextDestination.pos);
 
 	      // if distance between robot and destination is <= 50
 	      if( robot_position.x != -1 && distance <=  30 )//30cm de distancia
@@ -92,7 +89,7 @@ extern "C" void run( tesis::MessageServer* msgServer )
 
 	  if( gui_go_next_destination || autocontrol_go_next_destination )
 	  {
-	      nextDestination = nextDestination(destinations, nextDestination);
+	      nextDestination = getNextDestination(destinations, nextDestination);
 	      // TODO esto es un hack. GUI deberia publicar sus propios mensajes.
 	      msgServer->publish( "gui/go_next_destination", "false" );
 	  }
@@ -107,18 +104,16 @@ extern "C" void run( tesis::MessageServer* msgServer )
 	usleep(500); //0,035 segundos//0,010
     }
 
-    robot.close();
 }
 
-SafeSpot nextDestination(std::vector<SafeSpot> destinations, SafeSpot nextDestination)
+SafeSpot getNextDestination(std::vector<SafeSpot> destinations, SafeSpot actualDestination)
 {
   SafeSpot n;
   n.id = -1;
   
   for(int i = 0; i < destinations.size(); i++) 
-    if(destinations.at(i).id > nextDestination.id && (destinations.at(i).id < n.id || n.id == -1)) ;
+    if(destinations.at(i).id > actualDestination.id && (destinations.at(i).id < n.id || n.id == -1))
       n = destinations.at(i);
-  
   
   return n;
   

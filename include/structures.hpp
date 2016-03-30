@@ -1,6 +1,8 @@
 #ifndef STRUCTURES_HPP
 #define STRUCTURES_HPP
 
+#include <string>
+
 namespace robot
 {
 
@@ -30,7 +32,7 @@ typedef struct
     float time;
     std::string comment;
     
-} SafeSpot
+} SafeSpot;
 
 }
 #endif                                                      // STRUCTURES_HPP

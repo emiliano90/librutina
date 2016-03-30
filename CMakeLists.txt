@@ -8,9 +8,8 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/opt/boost_1_57_0/lib")
 
 #set(Boost_USE_STATIC_LIBS   ON)
 
-add_library(ardrone SHARED librutina.cpp 
+add_library(ardrone SHARED src/librutina.cpp 
                             src/util/util.cpp
-                            src/classes/robot_configuration.cpp 
                             )
 
 add_subdirectory(src)
