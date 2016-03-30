@@ -18,6 +18,7 @@ extern "C" void run( tesis::MessageServer* msgServer )
     
     long elapsed_time = 0;
 
+    SafeSpot lastDestination;
     SafeSpot nextDestination;
     nextDestination.id = -1;
     std::vector<SafeSpot> destinations;
@@ -56,15 +57,19 @@ extern "C" void run( tesis::MessageServer* msgServer )
 	  }
           if( autocontrol )
 	  {
+	      long elapsed_time = msgServer->getLong( "camera/elapsed_time", 0 );
+	      bool is_visible = msgServer->getBool( "camera/robot_found", false );
+	      //si no hay un destino asignado
 	      if(nextDestination.id == -1)
-	      {
 		nextDestination = getNextDestination(destinations, nextDestination);
-	      }
-		
+	      //si aparecio y estoy llendo al centro
+	      else if (nextDestination.id == -2 && is_visible)
+		nextDestination = lastDestination;
+	     
 	      float distance = Util::distance( robot_position, nextDestination.pos);
 
 	      // if distance between robot and destination is <= 50
-	      if( robot_position.x != -1 && distance <=  30 )//30cm de distancia
+	      if( is_visible && distance <=  30 )//30cm de distancia
 	      {
 		  if( start_count )
 		  {
@@ -80,11 +85,26 @@ extern "C" void run( tesis::MessageServer* msgServer )
 		      autocontrol_go_next_destination = true;
 		  }
 	      }
-	      else
+	      else 
 	      {
 		  start_count = true;
 		  autocontrol_go_next_destination = false;
+		  //si estoy desaparecido voy al centro
+		  if(!is_visible && nextDestination.id != -2)
+		  {
+		    lastDestination = nextDestination;
+		    nextDestination.pos.y = msgServer->getLong("camera/space/height") / 2;
+		    nextDestination.pos.x = msgServer->getLong("camera/space/width") / 2;
+		    nextDestination.pos.z = 500;
+		    nextDestination.id = -2;
+		    
+		  }
+		    
 	      }
+	      if(elapsed_time > 5000)
+		  msgServer->publish( "gui/action/land", "true");
+	  
+		
 	  }
 
 	  if( gui_go_next_destination || autocontrol_go_next_destination )
