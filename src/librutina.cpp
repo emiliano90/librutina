@@ -23,9 +23,6 @@ extern "C" void run( tesis::MessageServer* msgServer )
     nextDestination.id = -1;
     std::vector<SafeSpot> destinations;
 
-    msgServer->announce("routine/destination/first");
-    msgServer->announce("routine/destination/last");
-    
     while( !quit )
     {
 
@@ -128,24 +125,6 @@ extern "C" void run( tesis::MessageServer* msgServer )
             msgServer->publish( "camera/destination/y", std::to_string( nextDestination.pos.y ) );
             msgServer->publish( "camera/destination/z", std::to_string( nextDestination.pos.z ) );
             msgServer->publish( "camera/destination/id", std::to_string( nextDestination.id ) );
-
-            // is first destination
-            if( destinations.front().id == nextDestination.id )
-            {
-                msgServer->publish( "routine/destination/first", "true" );
-            }
-            // is last destination
-            else if( destinations.back().id ==  nextDestination.id )
-            {
-                msgServer->publish( "routine/destination/last", "true" );
-            }
-            else
-            {
-                // is neither first nor last destination
-                msgServer->publish( "routine/destination/first", "false" );
-                msgServer->publish( "routine/destination/last", "false" );
-            }
-
 
             quit = msgServer->getBool( "gui/finish", false );
         }
