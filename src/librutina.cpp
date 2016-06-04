@@ -2,6 +2,7 @@
 
 using namespace robot;
 
+
 //SafeSpot getNextDestination ( std::vector<SafeSpot> destinations, SafeSpot actualDestination );
 
 extern "C" void run ( tesis::MessageServer* msgServer)
