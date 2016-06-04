@@ -3,36 +3,30 @@
 
 #include <string>
 
-namespace robot
-{
-
-#ifndef MAX_ANGLE
-#define MAX_ANGLE 180
-#endif
-
-struct Point
-{
-    float x;
-    float y;
-    float z;
+struct Point {
+	float x;
+	float y;
 };
 
-struct Velocity
-{
-    double x;
-    double y;
-    double z;
+struct Point3D {
+	float x;
+	float y;
+	float z;
 };
 
-typedef struct
-{
-  
-    Point pos;
-    int id;
-    float time;
-    std::string comment;
-    
+struct Velocity {
+	double x;
+	double y;
+	double z;
+};
+
+typedef struct {
+
+	Point pos;
+	int id;
+	float time;
+	std::string comment;
+
 } SafeSpot;
 
-}
 #endif                                                      // STRUCTURES_HPP

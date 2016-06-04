@@ -1,0 +1,17 @@
+{
+    "checkpoints":[
+	{
+	     "id":2,
+	     "altura": 500
+	},
+	{
+	     "id":3,
+	     "altura": 700
+	},
+	{
+	     "id":1,
+	     "altura": 0
+	}
+    ]
+   
+}

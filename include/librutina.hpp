@@ -6,7 +6,8 @@
 #include <cmath>
 #include <chrono>
 #include <ardrone.h>
-
+#include "classes/rutina_configuration.hpp"
+#include "classes/CheckPoints.hpp"
 #include "message/message_server.hpp"
 
 #include "structures.hpp"

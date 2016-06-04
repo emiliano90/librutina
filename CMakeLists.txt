@@ -8,8 +8,10 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/opt/boost_1_57_0/lib")
 
 #set(Boost_USE_STATIC_LIBS   ON)
 
-add_library(ardrone SHARED src/librutina.cpp 
+add_library(rutina SHARED src/librutina.cpp 
                             src/util/util.cpp
+                            src/classes/CheckPoints.cpp
+                            src/classes/rutina_configuration.cpp
                             )
 
 add_subdirectory(src)
@@ -37,11 +39,14 @@ find_library(PTHREAD_LIB NAMES pthread)
 # cvdrone
 find_library(CVDRONE_LIB NAMES cvdrone PATHS ${CVDRONE_LIB_PATH})
 
-target_link_libraries(ardrone ${PTHREAD_LIB} 
+target_link_libraries(rutina ${PTHREAD_LIB} 
                                  ${Boost_LIBRARIES}
                                  ${CVDRONE_LIB} 
                              )    
 
-install(TARGETS ardrone DESTINATION "${INSTALL_DESTINATION}/lib/"
+install(TARGETS rutina DESTINATION "${INSTALL_DESTINATION}/lib/"
                         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-#install(FILES ./config/libardrone.json DESTINATION "${INSTALL_DESTINATION}/config/")
+install(FILES ./config/rutina.json DESTINATION "${INSTALL_DESTINATION}/config/")
+
+add_subdirectory(include/classes)
+add_subdirectory(include/config)
