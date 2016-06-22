@@ -1,17 +1,29 @@
 {
+
     "checkpoints":[
 	{
-	     "id":2,
-	     "altura": 500
+	     "id":4,
+	     "altura": 600
+	},
+	{
+	     "id":5,
+	     "altura": 0
 	},
 	{
 	     "id":3,
-	     "altura": 700
+	     "altura": 500
 	},
 	{
 	     "id":1,
+	     "altura": 500
+	},
+	{
+	     "id":2,
+	     "altura": 700
+	},
+	{
+	     "id":5,
 	     "altura": 0
-	}
-    ]
+	}]
    
 }
