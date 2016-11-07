@@ -15,6 +15,7 @@ extern "C" void run ( tesis::MessageServer* msgServer)
 	msgServer->announce ( "rutina/destination/y" );
 	msgServer->announce ( "rutina/destination/z" );
 	msgServer->announce ( "rutina/destination/id" );
+	msgServer->announce ( "rutina/destination/time" );
 	
 	bool quit = false;
 	struct timeval start, end;
@@ -62,7 +63,7 @@ extern "C" void run ( tesis::MessageServer* msgServer)
 				sp.pos.y = msgServer->getInt ( "camera/spots/" + std::to_string ( i ) + "/y", 0 );
 				sp.id = msgServer->getInt ( "camera/spots/" + std::to_string ( i ) + "/id", 0 );
 				sp.comment = msgServer->getInt ( "camera/spots/" + std::to_string ( i ) + "/comment", 0 );
-				sp.time = msgServer->getInt ( "camera/spots/" + std::to_string ( i ) + "/time", 0 );
+				//sp.time = msgServer->getInt ( "camera/spots/" + std::to_string ( i ) + "/time", 0 );
 
 				spots.push_back ( sp );
 			}
@@ -106,7 +107,7 @@ extern "C" void run ( tesis::MessageServer* msgServer)
 					
 					std::cout<<"time: "<< elapsed_time_over_spot.count()<<std::endl;
 					
-					if ( elapsed_time_over_spot.count() >=  nextDestination.sp.time ) {
+					if ( elapsed_time_over_spot.count() >=  nextDestination.check.time) {
 						autocontrol_go_next_destination = true;
 					}
 				} else {
@@ -141,6 +142,7 @@ extern "C" void run ( tesis::MessageServer* msgServer)
 			msgServer->publish ( "rutina/destination/y", std::to_string ( nextDestination.sp.pos.y ) );
 			msgServer->publish ( "rutina/destination/z", std::to_string ( nextDestination.check.altura ) );
 			msgServer->publish ( "rutina/destination/id", std::to_string ( nextDestination.sp.id ) );
+			msgServer->publish ( "rutina/destination/time", std::to_string ( nextDestination.check.time ) );
 			
 			quit = msgServer->getBool ( "gui/finish", false );
 		}

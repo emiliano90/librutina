@@ -31,7 +31,8 @@ void RutinaConfiguration::parse()
 			Checkpoint check;
 			check.id = child.get ( "id", 0 );
 			check.altura = child.get ( "altura", 0 );
-
+			check.time = child.get ( "time", 0 );
+			
 			config.checkpoints.push_back ( check );
 		}
 

@@ -8,6 +8,7 @@
 struct Checkpoint {
 	int id;
 	int altura;
+	int time;
 };
 struct RutinaConfig {
 	std::vector< Checkpoint > checkpoints;
